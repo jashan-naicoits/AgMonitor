@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,34 +16,27 @@
 
 package com.google.samples.apps.sunflower.api
 
-import com.google.samples.apps.sunflower.BuildConfig
-import com.google.samples.apps.sunflower.data.UnsplashSearchResponse
+import com.google.samples.apps.sunflower.data.LoginResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-/**
- * Used to connect to the Unsplash API to fetch photos
- */
-interface UnsplashService {
+interface LoginService {
 
-    @GET("search/photos")
-    suspend fun searchPhotos(
-        @Query("query") query: String,
-        @Query("page") page: Int,
-        @Query("per_page") perPage: Int,
-        @Query("client_id") clientId: String = BuildConfig.UNSPLASH_ACCESS_KEY
-    ): UnsplashSearchResponse
+    @GET("headlessLogin")
+    suspend fun login(
+        @Query("username") userName: String,
+        @Query("password") password: String
+    ): LoginResponse
 
     companion object {
-        private const val BASE_URL = "https://api.unsplash.com/"
+        private const val BASE_URL = "https://dev.agmonitor.com/"
 
-        fun create(): UnsplashService {
-            val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
+        fun create(): LoginService {
+            val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
@@ -54,7 +47,7 @@ interface UnsplashService {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(UnsplashService::class.java)
+                .create(LoginService::class.java)
         }
     }
 }

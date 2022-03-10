@@ -18,7 +18,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/view_pager_fragment">
+    app:startDestination="@id/loginFragment">
+
 
     <fragment
         android:id="@+id/view_pager_fragment"
@@ -62,4 +63,8 @@
             app:argType="string" />
     </fragment>
 
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.google.samples.apps.sunflower.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>
